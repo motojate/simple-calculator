@@ -2,7 +2,7 @@
   <q-page class="q-pa-md">
     <q-card class="q-pa-sm" flat bordered style="width: 50%">
       <q-card-section>
-        <div class="text-h6 float-right">dd</div>
+        <div class="text-h6 float-right">{{ calcViewResult }}</div>
       </q-card-section>
       <q-card-section class="q-pb-sm">
         <q-markup-table class="calc-table">
@@ -207,7 +207,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed } from 'vue'
+import { defineComponent, reactive, computed, ref } from 'vue'
 
 export default defineComponent({
   setup() {
@@ -217,6 +217,8 @@ export default defineComponent({
       secondNumber: 0,
     })
 
+    const calcViewResult = ref<number>(0)
+
     const calculate = (val: string | number) => {
       console.log(val)
       console.log(typeof val)
@@ -224,6 +226,7 @@ export default defineComponent({
     }
 
     return {
+      calcViewResult,
       ...state,
       calculate,
     }
