@@ -1,49 +1,238 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+  <q-page class="q-pa-md">
+    <q-card class="q-pa-sm" flat bordered style="width: 50%">
+      <q-card-section>
+        <div class="text-h6 float-right">dd</div>
+      </q-card-section>
+      <q-card-section class="q-pb-sm">
+        <q-markup-table class="calc-table">
+          <tr>
+            <td class="q-px-none">
+              <q-btn
+                square
+                padding="lg"
+                color="grey-7"
+                label="AC"
+                style="width: 100%"
+                @click="calculate('AC')"
+              />
+            </td>
+            <td class="q-px-none">
+              <q-btn
+                square
+                padding="lg"
+                color="grey-7"
+                label="+/-"
+                style="width: 100%"
+                @click="calculate('+/-')"
+              />
+            </td>
+            <td class="q-px-none">
+              <q-btn
+                square
+                padding="lg"
+                color="grey-7"
+                label="%"
+                style="width: 100%"
+                @click="calculate('%')"
+              />
+            </td>
+            <td class="q-px-none">
+              <q-btn
+                square
+                padding="lg"
+                color="orange-7"
+                label="/"
+                style="width: 100%"
+                @click="calculate('/')"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td class="q-px-none">
+              <q-btn
+                square
+                padding="lg"
+                color="grey-6"
+                label="7"
+                style="width: 100%"
+                @click="calculate(7)"
+              />
+            </td>
+            <td class="q-px-none">
+              <q-btn
+                square
+                padding="lg"
+                color="grey-6"
+                label="8"
+                :val="8"
+                style="width: 100%"
+              />
+            </td>
+            <td class="q-px-none">
+              <q-btn
+                square
+                padding="lg"
+                color="grey-6"
+                label="9"
+                :val="9"
+                style="width: 100%"
+              />
+            </td>
+            <td class="q-px-none">
+              <q-btn
+                square
+                padding="lg"
+                color="orange-7"
+                label="*"
+                style="width: 100%"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td class="q-px-none">
+              <q-btn
+                square
+                padding="lg"
+                color="grey-6"
+                label="4"
+                :val="4"
+                style="width: 100%"
+              />
+            </td>
+            <td class="q-px-none">
+              <q-btn
+                square
+                padding="lg"
+                color="grey-6"
+                label="5"
+                :val="5"
+                style="width: 100%"
+              />
+            </td>
+            <td class="q-px-none">
+              <q-btn
+                square
+                padding="lg"
+                color="grey-6"
+                label="6"
+                :val="6"
+                style="width: 100%"
+              />
+            </td>
+            <td class="q-px-none">
+              <q-btn
+                square
+                padding="lg"
+                color="orange-7"
+                label="-"
+                style="width: 100%"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td class="q-px-none">
+              <q-btn
+                square
+                padding="lg"
+                color="grey-6"
+                label="1"
+                :val="1"
+                style="width: 100%"
+              />
+            </td>
+            <td class="q-px-none">
+              <q-btn
+                square
+                padding="lg"
+                color="grey-6"
+                label="2"
+                :val="2"
+                style="width: 100%"
+              />
+            </td>
+            <td class="q-px-none">
+              <q-btn
+                square
+                padding="lg"
+                color="grey-6"
+                label="3"
+                :val="3"
+                style="width: 100%"
+              />
+            </td>
+            <td class="q-px-none">
+              <q-btn
+                square
+                padding="lg"
+                color="orange-7"
+                label="+"
+                style="width: 100%"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td class="q-px-none" colspan="2">
+              <q-btn
+                square
+                padding="lg"
+                color="grey-6"
+                label="0"
+                :val="0"
+                style="width: 100%"
+              />
+            </td>
+            <td class="q-px-none">
+              <q-btn
+                padding="lg"
+                color="grey-6"
+                label="."
+                style="width: 100%"
+              />
+            </td>
+            <td class="q-px-none">
+              <q-btn
+                square
+                padding="lg"
+                color="orange-7"
+                label="="
+                style="width: 100%"
+              />
+            </td>
+          </tr>
+        </q-markup-table>
+      </q-card-section>
+    </q-card>
   </q-page>
 </template>
 
 <script lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, reactive, computed } from 'vue'
 
 export default defineComponent({
-  name: 'IndexPage',
-  components: { ExampleComponent },
-  setup () {
-    const todos = ref<Todo[]>([
-      {
-        id: 1,
-        content: 'ct1'
-      },
-      {
-        id: 2,
-        content: 'ct2'
-      },
-      {
-        id: 3,
-        content: 'ct3'
-      },
-      {
-        id: 4,
-        content: 'ct4'
-      },
-      {
-        id: 5,
-        content: 'ct5'
-      }
-    ]);
-    const meta = ref<Meta>({
-      totalCount: 1200
-    });
-    return { todos, meta };
-  }
-});
+  setup() {
+    const state = reactive({
+      firstNumber: 0,
+      operator: '+',
+      secondNumber: 0,
+    })
+
+    const calculate = (val: string | number) => {
+      console.log(val)
+      console.log(typeof val)
+      let result = 0
+    }
+
+    return {
+      ...state,
+      calculate,
+    }
+  },
+})
 </script>
+
+<style lang="scss" scoped>
+.q-px-none {
+  padding: 0px;
+}
+</style>
