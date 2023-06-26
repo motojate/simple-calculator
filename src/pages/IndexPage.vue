@@ -187,6 +187,7 @@
             </td>
             <td class="q-px-none">
               <q-btn
+                square
                 padding="lg"
                 color="grey-6"
                 label="."
@@ -213,7 +214,8 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
-
+import { Queue } from 'src/model/Queue'
+import { CalculatorModel, OPERATE_TYPE } from 'src/model/Calculate'
 export default defineComponent({
   setup() {
     // const calcState = {
@@ -221,7 +223,7 @@ export default defineComponent({
     //   operator: '+',
     //   AfterNumber: 0,
     // }
-    const calcState = new Map()
+    const calcState = new Queue<number | string>()
 
     const calcViewResult = ref<number>(0)
     const numberToStringAddToNumber = (val: number): number => {
@@ -233,48 +235,24 @@ export default defineComponent({
     }
 
     const calculate = (val: string) => {
-      console.log(val)
+      calcState.enqueue(val)
       console.log(calcState)
-      if (!val) return
-
-      switch (val) {
-        case 'AC':
-          calcState.clear()
-          calcViewResult.value = 0
-          break
-        case '+':
-          calcState.set('operate', '+')
-          if (calcState.has('beforeNumber'))
-            calcViewResult.value += calcState.get('beforeNumber')
-          else {
-            calcState.set('beforeNumber', calcViewResult.value)
-            calcViewResult.value = 0
-          }
-          break
-        case '-':
-          calcState.clear()
-          calcViewResult.value = 0
-          break
-        case '/':
-          calcState.clear()
-          calcViewResult.value = 0
-          break
-        case '*':
-          calcState.clear()
-          calcViewResult.value = 0
-          break
-        case '=':
-          calculate(calcState.get('operate'))
-          break
-      }
     }
 
-    const settingCalculate = (val: string | number) => {
+    const settingCalculate = (val: number | string) => {
+      calcState.enqueue(val)
+
       if (typeof val === 'number') {
-        calcViewResult.value = numberToStringAddToNumber(val)
+        calcViewResult.value = CalculatorModel.combine(calcState)
       } else {
-        calculate(val)
+        if (OPERATE_TYPE.includes(val)) console.log(val)
       }
+      console.log(calcState)
+      // if (typeof val === 'number') {
+      //   calcViewResult.value = numberToStringAddToNumber(val)
+      // } else {
+      //   calculate(val)
+      // }
     }
     const state = {
       calcViewResult,
