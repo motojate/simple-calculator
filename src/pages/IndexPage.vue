@@ -14,7 +14,7 @@
                 color="grey-7"
                 label="AC"
                 style="width: 100%"
-                @click="calculate('AC')"
+                @click="settingCalculate('AC')"
               />
             </td>
             <td class="q-px-none">
@@ -24,7 +24,7 @@
                 color="grey-7"
                 label="+/-"
                 style="width: 100%"
-                @click="calculate('+/-')"
+                @click="settingCalculate('+/-')"
               />
             </td>
             <td class="q-px-none">
@@ -34,7 +34,7 @@
                 color="grey-7"
                 label="%"
                 style="width: 100%"
-                @click="calculate('%')"
+                @click="settingCalculate('%')"
               />
             </td>
             <td class="q-px-none">
@@ -44,7 +44,7 @@
                 color="orange-7"
                 label="/"
                 style="width: 100%"
-                @click="calculate('/')"
+                @click="settingCalculate('/')"
               />
             </td>
           </tr>
@@ -56,7 +56,7 @@
                 color="grey-6"
                 label="7"
                 style="width: 100%"
-                @click="calculate(7)"
+                @click="settingCalculate(7)"
               />
             </td>
             <td class="q-px-none">
@@ -65,8 +65,8 @@
                 padding="lg"
                 color="grey-6"
                 label="8"
-                :val="8"
                 style="width: 100%"
+                @click="settingCalculate(8)"
               />
             </td>
             <td class="q-px-none">
@@ -75,8 +75,8 @@
                 padding="lg"
                 color="grey-6"
                 label="9"
-                :val="9"
                 style="width: 100%"
+                @click="settingCalculate(9)"
               />
             </td>
             <td class="q-px-none">
@@ -86,6 +86,7 @@
                 color="orange-7"
                 label="*"
                 style="width: 100%"
+                @click="settingCalculate('*')"
               />
             </td>
           </tr>
@@ -96,8 +97,8 @@
                 padding="lg"
                 color="grey-6"
                 label="4"
-                :val="4"
                 style="width: 100%"
+                @click="settingCalculate(4)"
               />
             </td>
             <td class="q-px-none">
@@ -106,8 +107,8 @@
                 padding="lg"
                 color="grey-6"
                 label="5"
-                :val="5"
                 style="width: 100%"
+                @click="settingCalculate(5)"
               />
             </td>
             <td class="q-px-none">
@@ -116,8 +117,8 @@
                 padding="lg"
                 color="grey-6"
                 label="6"
-                :val="6"
                 style="width: 100%"
+                @click="settingCalculate(6)"
               />
             </td>
             <td class="q-px-none">
@@ -127,6 +128,7 @@
                 color="orange-7"
                 label="-"
                 style="width: 100%"
+                @click="settingCalculate('-')"
               />
             </td>
           </tr>
@@ -137,8 +139,8 @@
                 padding="lg"
                 color="grey-6"
                 label="1"
-                :val="1"
                 style="width: 100%"
+                @click="settingCalculate(1)"
               />
             </td>
             <td class="q-px-none">
@@ -147,8 +149,8 @@
                 padding="lg"
                 color="grey-6"
                 label="2"
-                :val="2"
                 style="width: 100%"
+                @click="settingCalculate(2)"
               />
             </td>
             <td class="q-px-none">
@@ -157,8 +159,8 @@
                 padding="lg"
                 color="grey-6"
                 label="3"
-                :val="3"
                 style="width: 100%"
+                @click="settingCalculate(3)"
               />
             </td>
             <td class="q-px-none">
@@ -168,6 +170,7 @@
                 color="orange-7"
                 label="+"
                 style="width: 100%"
+                @click="settingCalculate('+')"
               />
             </td>
           </tr>
@@ -178,8 +181,8 @@
                 padding="lg"
                 color="grey-6"
                 label="0"
-                :val="0"
                 style="width: 100%"
+                @click="settingCalculate(0)"
               />
             </td>
             <td class="q-px-none">
@@ -188,6 +191,7 @@
                 color="grey-6"
                 label="."
                 style="width: 100%"
+                @click="settingCalculate('.')"
               />
             </td>
             <td class="q-px-none">
@@ -197,6 +201,7 @@
                 color="orange-7"
                 label="="
                 style="width: 100%"
+                @click="settingCalculate('=')"
               />
             </td>
           </tr>
@@ -207,28 +212,80 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed, ref } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 
 export default defineComponent({
   setup() {
-    const state = reactive({
-      firstNumber: 0,
-      operator: '+',
-      secondNumber: 0,
-    })
+    // const calcState = {
+    //   beforeNumber: 0,
+    //   operator: '+',
+    //   AfterNumber: 0,
+    // }
+    const calcState = new Map()
 
     const calcViewResult = ref<number>(0)
+    const numberToStringAddToNumber = (val: number): number => {
+      if (calcViewResult.value === 0) return val
+      else {
+        val = Number([calcViewResult.value, val].join(''))
+        return val
+      }
+    }
 
-    const calculate = (val: string | number) => {
+    const calculate = (val: string) => {
       console.log(val)
-      console.log(typeof val)
-      let result = 0
+      console.log(calcState)
+      if (!val) return
+
+      switch (val) {
+        case 'AC':
+          calcState.clear()
+          calcViewResult.value = 0
+          break
+        case '+':
+          calcState.set('operate', '+')
+          if (calcState.has('beforeNumber'))
+            calcViewResult.value += calcState.get('beforeNumber')
+          else {
+            calcState.set('beforeNumber', calcViewResult.value)
+            calcViewResult.value = 0
+          }
+          break
+        case '-':
+          calcState.clear()
+          calcViewResult.value = 0
+          break
+        case '/':
+          calcState.clear()
+          calcViewResult.value = 0
+          break
+        case '*':
+          calcState.clear()
+          calcViewResult.value = 0
+          break
+        case '=':
+          calculate(calcState.get('operate'))
+          break
+      }
+    }
+
+    const settingCalculate = (val: string | number) => {
+      if (typeof val === 'number') {
+        calcViewResult.value = numberToStringAddToNumber(val)
+      } else {
+        calculate(val)
+      }
+    }
+    const state = {
+      calcViewResult,
+    }
+    const active = {
+      settingCalculate,
     }
 
     return {
-      calcViewResult,
       ...state,
-      calculate,
+      ...active,
     }
   },
 })
