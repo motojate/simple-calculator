@@ -12,8 +12,16 @@ export class Queue<T> {
   }
 
   dequeue(): T | undefined {
-    this.pointer++
-    return this.items[this.pointer]
+    return this.items.shift()
+  }
+
+  next(): T | Error {
+    if (this.pointer < this.items.length) return this.items[this.pointer++]
+    else return new Error('list index out of range')
+  }
+
+  getPointer(): number {
+    return this.pointer
   }
 
   isEmpty(): boolean {

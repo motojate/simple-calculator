@@ -2,10 +2,14 @@ import { Queue } from 'src/model/Queue'
 
 export class CalculatorModel {
   static combine(queue: Queue<number | string>) {
-    for (let i = 0; i < queue.size(); i++) {
-      console.log(queue.dequeue())
+    if (queue.getPointer() === 0) return queue.next()
+    else {
+      const number = []
+      for (let i = 0; i < queue.size(); i++) {
+        number.push(queue.next())
+      }
+      return Number(`${3}${3}${3}`)
     }
-    return 1
   }
 
   static add(a: number, b: number): number {
@@ -28,5 +32,3 @@ export class CalculatorModel {
     return -a
   }
 }
-
-export const OPERATE_TYPE: string[] = ['+', '-', '*', '/', '+/-', '%']

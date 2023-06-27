@@ -215,7 +215,7 @@
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
 import { Queue } from 'src/model/Queue'
-import { CalculatorModel, OPERATE_TYPE } from 'src/model/Calculate'
+import { CalculatorModel } from 'src/model/Calculate'
 export default defineComponent({
   setup() {
     // const calcState = {
