@@ -213,46 +213,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
-import { Queue } from 'src/model/Queue'
-import { CalculatorModel } from 'src/model/Calculate'
+import { defineComponent, ref } from 'vue'
+import { OPERATE_TYPE } from 'src/common/constants'
+import { MyCalcStack } from 'src/common/models/MyCalcStack'
+import { CalculatorModel } from 'src/common/models/Calculate'
 export default defineComponent({
   setup() {
-    // const calcState = {
-    //   beforeNumber: 0,
-    //   operator: '+',
-    //   AfterNumber: 0,
-    // }
-    const calcState = new Queue<number | string>()
+    const calcState = new MyCalcStack<number | string>()
 
     const calcViewResult = ref<number>(0)
-    const numberToStringAddToNumber = (val: number): number => {
-      if (calcViewResult.value === 0) return val
-      else {
-        val = Number([calcViewResult.value, val].join(''))
-        return val
-      }
-    }
-
-    const calculate = (val: string) => {
-      calcState.enqueue(val)
-      console.log(calcState)
-    }
 
     const settingCalculate = (val: number | string) => {
-      calcState.enqueue(val)
-
-      if (typeof val === 'number') {
-        calcViewResult.value = CalculatorModel.combine(calcState)
-      } else {
-        if (OPERATE_TYPE.includes(val)) console.log(val)
+      if (val === 'AC') {
+        calcState.clear()
+        calcViewResult.value = 0
+        return
       }
+      if (calcState.size() === 0 && OPERATE_TYPE.includes(val as string)) return
+
+      calcState.push(val)
       console.log(calcState)
-      // if (typeof val === 'number') {
-      //   calcViewResult.value = numberToStringAddToNumber(val)
-      // } else {
-      //   calculate(val)
-      // }
+      calcViewResult.value = CalculatorModel.calculate(calcState)
     }
     const state = {
       calcViewResult,
@@ -274,3 +255,4 @@ export default defineComponent({
   padding: 0px;
 }
 </style>
+src/common/models/MyCalcStack
