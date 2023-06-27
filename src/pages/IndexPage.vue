@@ -229,8 +229,10 @@ export default defineComponent({
         calcViewResult.value = 0
         return
       }
+      // TODO
       if (
         typeof val === 'string' &&
+        calcState.getItem(calcState.size() - 1) === '1' &&
         calcState.size() === 0 &&
         OPERATE_TYPE.includes(val)
       )

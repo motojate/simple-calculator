@@ -27,6 +27,7 @@ export class CalculatorModel {
     switch (stack.peek()) {
       case '+':
         stack.setPointer(stack.size())
+
         break
       case '-':
         break
