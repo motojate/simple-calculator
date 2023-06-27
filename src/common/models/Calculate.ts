@@ -23,6 +23,17 @@ export class CalculatorModel {
   }
 
   operate(stack: MyCalcStack<number | string>) {
+    switch (stack.peek()) {
+      case '+':
+        break
+      case '-':
+        break
+      case '/':
+        break
+      case '*':
+        break
+    }
+    console.log(stack.peek())
     return 1
   }
 
