@@ -243,7 +243,7 @@ export default defineComponent({
         OPERATE_TYPE.includes(val)
       )
         return
-
+      // TODO
       calcState.push(val)
 
       calcViewResult.value = CalculatorModel.calculate(calcState)
