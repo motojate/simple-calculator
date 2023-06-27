@@ -15,9 +15,8 @@ export class MyCalcStack<T> {
     return this.stack.pop()
   }
 
-  moveToNextPositionByNumber() {
-    // if (this.pointer < this.items.length) return this.items[this.pointer++]
-    // else return new Error('list index out of range')
+  getItem(index: number): T | undefined {
+    return this.stack[index]
   }
 
   getPointer(): number {

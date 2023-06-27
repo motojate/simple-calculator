@@ -23,8 +23,10 @@ export class CalculatorModel {
   }
 
   operate(stack: MyCalcStack<number | string>) {
+    const value = stack.getItem(stack.getPointer())
     switch (stack.peek()) {
       case '+':
+        stack.setPointer(stack.size())
         break
       case '-':
         break
@@ -34,7 +36,7 @@ export class CalculatorModel {
         break
     }
     console.log(stack.peek())
-    return 1
+    return value as number
   }
 
   add(a: number, b: number): number {

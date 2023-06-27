@@ -229,7 +229,12 @@ export default defineComponent({
         calcViewResult.value = 0
         return
       }
-      if (calcState.size() === 0 && OPERATE_TYPE.includes(val as string)) return
+      if (
+        typeof val === 'string' &&
+        calcState.size() === 0 &&
+        OPERATE_TYPE.includes(val)
+      )
+        return
 
       calcState.push(val)
       console.log(calcState)
