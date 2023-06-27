@@ -229,7 +229,13 @@ export default defineComponent({
         calcViewResult.value = 0
         return
       }
-      // TODO
+      // TODO : 마지막 아이템이 스트링이고 val 또한 스트링일 때.
+
+      if (
+        OPERATE_TYPE.includes(val as string) &&
+        OPERATE_TYPE.includes(calcState.peek() as string)
+      )
+        calcState.pop()
       if (
         typeof val === 'string' &&
         calcState.getItem(calcState.size() - 1) === '1' &&
@@ -239,7 +245,7 @@ export default defineComponent({
         return
 
       calcState.push(val)
-      console.log(calcState)
+
       calcViewResult.value = CalculatorModel.calculate(calcState)
     }
     const state = {
