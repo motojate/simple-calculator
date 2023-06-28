@@ -10,6 +10,8 @@ export class CalculatorModel {
       return nodeValue
     } else if (typeof data === 'string' && OPERATE_TYPE.includes(data)) {
       return calculator.makeTree(tree, data)
+    } else if (typeof data === 'number' && typeof tree.value !== 'number') {
+      return calculator.makeTree(tree, data)
     }
     if (!tree) return 1
     return 1
@@ -17,10 +19,21 @@ export class CalculatorModel {
 
   makeTree(tree: MyCalcTree<number | string>, data: string): number {
     if (typeof tree.value === 'number' && OPERATE_TYPE.includes(data)) {
+      if (tree.left === null) {
+        console.log(tree.value)
+        const treeNode = new MyCalcTree(tree.value)
+        tree.left = treeNode
+        tree.value = data
+      } else if (tree.right === null) {
+        const treeNode = new MyCalcTree(tree.value)
+        tree.right = treeNode
+        tree.value = data
+      } else {
+        tree.setRootNode(tree, data)
+        console.log(tree)
+      }
     }
-    if (tree.left) {
-      return this.makeTree(tree.left, data)
-    }
+
     return 1
   }
 

@@ -8,4 +8,9 @@ export class MyCalcTree<T> {
     this.left = null
     this.right = null
   }
+
+  setRootNode(node: MyCalcTree<T>, data: T): void {
+    this.value = data
+    this.left = node
+  }
 }
