@@ -29,7 +29,6 @@ export class CalculatorModel {
   makeTree(tree: MyCalcTree<number | string>, data: string): number {
     if (typeof tree.value === 'number' && OPERATE_TYPE.includes(data)) {
       if (tree.left === null) {
-        console.log(tree.value)
         const treeNode = new MyCalcTree(tree.value)
         tree.left = treeNode
         tree.value = data
@@ -39,7 +38,6 @@ export class CalculatorModel {
         tree.value = data
       } else {
         tree.setRootNode(tree, data)
-        console.log(tree)
       }
     }
 

@@ -214,8 +214,6 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { OPERATE_TYPE } from 'src/common/constants'
-import { MyCalcStack } from 'src/common/models/MyCalcStack'
 import { MyCalcTree } from 'src/common/models/MyCalcTree'
 import { CalculatorModel } from 'src/common/models/Calculate'
 export default defineComponent({
@@ -228,37 +226,7 @@ export default defineComponent({
       calcViewResult.value = CalculatorModel.calculate(calcState, val)
       console.log(calcState)
     }
-    console.log(calcState)
-    // const settingCalculate = (val: number | string) => {
-    //   if (val === 'AC') {
-    //     calcState.clear()
-    //     calcViewResult.value = 0
-    //     return
-    //   }
-    //   // TODO : 마지막 아이템이 스트링이고 val 또한 스트링일 때.
 
-    //   if (
-    //     OPERATE_TYPE.includes(val as string) &&
-    //     OPERATE_TYPE.includes(calcState.peek() as string)
-    //   ) {
-    //     calcState.pop()
-    //     calcState.push(val)
-    //     console.log(calcState)
-    //     return
-    //   }
-    //   if (
-    //     typeof val === 'string' &&
-    //     calcState.getItem(calcState.size() - 1) === '1' &&
-    //     calcState.size() === 0 &&
-    //     OPERATE_TYPE.includes(val)
-    //   )
-    //     return
-    //   // TODO
-    //   calcState.push(val)
-
-    //   calcViewResult.value = CalculatorModel.calculate(calcState)
-    //   console.log(calcState)
-    // }
     const state = {
       calcViewResult,
     }
