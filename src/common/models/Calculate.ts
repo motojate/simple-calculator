@@ -11,10 +11,19 @@ export class CalculatorModel {
     } else if (typeof data === 'string' && OPERATE_TYPE.includes(data)) {
       return calculator.makeTree(tree, data)
     } else if (typeof data === 'number' && typeof tree.value !== 'number') {
-      return calculator.makeTree(tree, data)
+      return calculator.change(tree, data)
     }
     if (!tree) return 1
     return 1
+  }
+  change(tree: MyCalcTree<number | string>, data: number): number {
+    if (tree.left !== null && tree.right !== null) {
+      return this.change(tree.left, data)
+    } else {
+      const newNode = new MyCalcTree(data)
+      tree.right = newNode
+      return data
+    }
   }
 
   makeTree(tree: MyCalcTree<number | string>, data: string): number {
