@@ -5,4 +5,5 @@ export const OPERATE_ORDER: { [key: string]: number } = {
   '/': 1,
   '+': 2,
   '-': 2,
+  default: 3,
 }
