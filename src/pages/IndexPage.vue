@@ -231,7 +231,12 @@ export default defineComponent({
           numberCalcState,
           val
         )
-      else return CalculatorModel.operateCalculate(operateCalcState, val)
+      else
+        return CalculatorModel.operateCalculate(
+          numberCalcState,
+          operateCalcState,
+          val
+        )
     }
 
     const state = {

@@ -9,8 +9,16 @@ export class CalculatorModel {
     stack.push(combineNumber)
     return combineNumber
   }
-  static operateCalculate(stack: MyCalcStack<string>, data: string) {
-    stack.push(data)
+  static operateCalculate(
+    numberStack: MyCalcStack<number>,
+    operateStack: MyCalcStack<string>,
+    data: string
+  ) {
+    if (operateStack.size() === 0) {
+      operateStack.push(data)
+      numberStack.push(0)
+    } else {
+    }
   }
 
   combine(a: number, b: number): number {
