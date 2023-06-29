@@ -214,17 +214,24 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { MyCalcTree } from 'src/common/models/MyCalcTree'
+import { MyCalcStack } from 'src/common/models/MyCalcStack'
 import { CalculatorModel } from 'src/common/models/Calculate'
+import { OPERATE_ORDER, OPERATE_TYPE } from 'src/common/constants'
+
 export default defineComponent({
   setup() {
     // const calcState = new MyCalcStack<number | string>()
-    const calcState = new MyCalcTree<number | string>(0)
+    const numberCalcState = new MyCalcStack<number>()
+    const operateCalcState = new MyCalcStack<string>()
     const calcViewResult = ref<number>(0)
 
     const settingCalculate = (val: number | string) => {
-      calcViewResult.value = CalculatorModel.calculate(calcState, val)
-      console.log(calcState)
+      if (typeof val === 'number')
+        calcViewResult.value = CalculatorModel.numberCalculate(
+          numberCalcState,
+          val
+        )
+      else return CalculatorModel.operateCalculate(operateCalcState, val)
     }
 
     const state = {

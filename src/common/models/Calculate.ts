@@ -2,89 +2,20 @@ import { MyCalcStack } from 'src/common/models/MyCalcStack'
 import { MyCalcTree } from 'src/common/models/MyCalcTree'
 import { OPERATE_ORDER, OPERATE_TYPE } from 'src/common/constants'
 export class CalculatorModel {
-  static calculate(tree: MyCalcTree<number | string>, data: number | string) {
-    const calculator = new CalculatorModel()
-    if (typeof tree.value === 'number' && typeof data === 'number') {
-      const nodeValue = calculator.combine(tree.value, data)
-      tree.value = nodeValue
-      return nodeValue
-    } else if (typeof data === 'string' && OPERATE_TYPE.includes(data)) {
-      return calculator.makeTree(tree, data)
-    } else if (typeof data === 'number' && typeof tree.value !== 'number') {
-      return calculator.change(tree, data)
-    }
-    if (!tree) return 1
-    return 1
+  static calculateModel = new CalculatorModel()
+
+  static numberCalculate(stack: MyCalcStack<number>, data: number) {
+    const combineNumber = this.calculateModel.combine(stack.pop() ?? 0, data)
+    stack.push(combineNumber)
+    return combineNumber
   }
-  change(tree: MyCalcTree<number | string>, data: number): number {
-    if (tree.left !== null && tree.right !== null) {
-      return this.change(tree.left, data)
-    } else {
-      const newNode = new MyCalcTree(data)
-      tree.right = newNode
-      return data
-    }
+  static operateCalculate(stack: MyCalcStack<string>, data: string) {
+    return
   }
 
-  makeTree(tree: MyCalcTree<number | string>, data: string): number {
-    if (typeof tree.value === 'number' && OPERATE_TYPE.includes(data)) {
-      if (tree.left === null) {
-        const treeNode = new MyCalcTree(tree.value)
-        tree.left = treeNode
-        tree.value = data
-      } else if (tree.right === null) {
-        const treeNode = new MyCalcTree(tree.value)
-        tree.right = treeNode
-        tree.value = data
-      } else {
-        tree.setRootNode(tree, data)
-      }
-    }
-
-    return 1
-  }
-
-  // static calculate(stack: MyCalcStack<number | string>): number {
-  //   const calculator = new CalculatorModel()
-  //   const lastItem = stack.peek()
-  //   if (typeof lastItem === 'number') return calculator.combine(stack)
-  //   else if (typeof lastItem === 'string' && OPERATE_TYPE.includes(lastItem)) {
-  //     const preOperateOrderIndex = stack.getOperateOrder()
-  //     stack.setPointer(stack.size())
-  //     stack.setOperateOrder(OPERATE_ORDER[lastItem])
-  //     switch (lastItem) {
-  //       case '+':
-  //         if (preOperateOrderIndex === 2) {
-  //         }
-  //         break
-  //       case '-':
-  //         break
-  //       case '/':
-  //         break
-  //       case '*':
-  //         break
-  //     }
-  //   } else {
-  //   }
-
-  //   return 1
-  // }
   combine(a: number, b: number): number {
     return a * 10 + b
   }
-
-  // combine(stack: MyCalcStack<number | string>): number {
-  //   const numberBuffer: number[] = []
-  //   const stackLength = stack.size()
-
-  //   for (let i = stack.getPointer(); i < stackLength; i++) {
-  //     numberBuffer.push(stack.pop() as number)
-  //   }
-  //   const combinedNumber = parseInt(numberBuffer.reverse().join(''), 10)
-  //   stack.push(combinedNumber)
-
-  //   return combinedNumber
-  // }
 
   operate(stack: MyCalcStack<number | string>) {
     return null
