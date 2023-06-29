@@ -10,7 +10,7 @@ export class CalculatorModel {
     return combineNumber
   }
   static operateCalculate(stack: MyCalcStack<string>, data: string) {
-    return
+    stack.push(data)
   }
 
   combine(a: number, b: number): number {
