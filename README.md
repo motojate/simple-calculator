@@ -7,15 +7,15 @@ server port: 9000
 
 - 참고 : apple 계산기
 
-## Install the dependencies
+## node_modules 설치 방법.
 
 ```bash
-yarn
+yarn 추천.
 # or
 npm install
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+### 실행 방법.
 
 ```bash
 quasar dev
