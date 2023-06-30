@@ -20,3 +20,23 @@ npm install
 ```bash
 quasar dev
 ```
+
+## node_modules 설치 방법.
+
+```bash
+yarn 추천.
+# or
+npm install
+```
+
+## 파일 구조 간략화.
+
+```bash
+├── src
+│    └── common
+│        ├── models (비즈니스 로직 폴더)
+│        └── constants.ts (상수 모음)
+└── pages
+      └── IndexPage.vue (View 파일)
+
+```
