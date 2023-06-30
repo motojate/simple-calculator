@@ -21,14 +21,6 @@ npm install
 quasar dev
 ```
 
-## node_modules 설치 방법.
-
-```bash
-yarn 추천.
-# or
-npm install
-```
-
 ## 파일 구조 간략화.
 
 ```bash
