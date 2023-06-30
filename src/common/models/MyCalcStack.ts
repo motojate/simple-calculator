@@ -1,10 +1,12 @@
 export class MyCalcStack<T> {
   private stack: T[]
   private isNewNumber: boolean
+  private floatMode: boolean
 
   constructor() {
     this.stack = []
     this.isNewNumber = true
+    this.floatMode = false // 소숫점 미구현
   }
 
   push(item: T): void {
